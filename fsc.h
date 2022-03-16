@@ -20,7 +20,7 @@
 #define CHUNKER_FSC_H_H
 #include "common.h"
 
-static int regular_chunking_fsc(struct file_struct *fs) {
+static int regular_chunking_FSC(struct file_struct *fs) {
     uint64_t n_bytes_left;
     uint64_t offset = 0;
     uint32_t hash = 0;

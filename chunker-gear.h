@@ -38,7 +38,7 @@ static int regular_chunking_cdc_gear(struct file_struct *fs) {
         if (offset - last_offset >= min_chunksize || offset == fs->test_length) {
             // determine a chunk boundary, chunk range [ last_offset, offset)
             if ((hash == magic_number) || offset - last_offset >= max_chunksize || offset == fs->test_length) {
-            last_chunk:
+last_chunk:
                 cb.left = last_offset;
                 cb.right = offset;
                 insert_chunk_boundary(tid, &cb);
@@ -67,7 +67,7 @@ static int regular_chunking_cdc_gear(struct file_struct *fs) {
 
 // fast forward with fp check
 // fast_skip = 1
-int chunking_phase_one_gear_fast(struct file_struct *fs) {
+int chunking_phase_one_gear_fast_FF(struct file_struct *fs) {
     uint64_t offset = 0, local_offset = 0;
     uint32_t hash = 0;
     uint8_t *str = (uint8_t *)fs->map;
@@ -95,7 +95,7 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
         if (skipped) {
             if (local_offset == GEAR_HASHLEN()) {
                 if ((hash != magic_number) && offset - last_offset < max_chunksize && offset < fs->test_length) {
-                fast_detect_fail:
+fast_detect_fail:
                     offset = last_offset;
 
                     if (next_size_idx < list_length - 1) {
@@ -132,12 +132,14 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
                 }
             }
             continue;
-        }
+        }   //if (skiped)
 
+        //xzjin here is the begin point
         if (offset - last_offset >= min_chunksize || offset == fs->test_length) {
             // determine a chunk boundary, chunk range [ last_offset, offset)
+            //xzjin here means chunk point, CDC calculated or forced
             if (((hash) == magic_number) || offset - last_offset >= max_chunksize || offset == fs->test_length) {
-            last_chunk_fast:
+last_chunk_fast:
                 cb.left = last_offset;
                 cb.right = offset;
 
@@ -148,7 +150,7 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
                 last_offset = offset;
                 lock_hash_slot(hash_fp);
                 fp = lookup_fp(hash_fp);
-                if (fp == NULL) {
+                if (fp == NULL) {   //xzjin fingerprint NOT duplicate
                     fp = insert_fp(hash_fp);
                     unlock_hash_slot(hash_fp);
 
@@ -171,9 +173,9 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
                     }
                     offset += min_chunksize - GEAR_HASHLEN();
                     skipped = 0;
-                } else {
+                } else {    //xzjin fingerprint duplicated
                     unlock_hash_slot(hash_fp);
-                boundary_hit_in_fast:
+boundary_hit_in_fast:
                     if (reach_file_end(fs, offset)) {
                         break;
                     }
@@ -191,7 +193,7 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
                     last_recipe_fp = fp;
                     next_size_idx = 0;
 
-                fetch_next_size:
+fetch_next_size:
                     next_size = next_chunk_size(last_recipe_fp, next_size_idx);
                     if (next_size == 0) {
                         offset += min_chunksize - GEAR_HASHLEN();
@@ -201,13 +203,14 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
                         next_size_idx++;
                         goto fetch_next_size;
                     } else {  // fast jump
+                        //here subtract GEAR_HASHLEN to calculate the hash value
                         offset += next_size - GEAR_HASHLEN();
                         skipped = 1;
                     }
                 }
                 local_offset = 0;
                 hash = 0;
-            }
+            }   // if(chunked)
         }  // size >= min_chunksize-1
     }      // while
 
@@ -218,7 +221,7 @@ int chunking_phase_one_gear_fast(struct file_struct *fs) {
 
 // fast forward with fp check
 // fast_skip = 2
-int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
+int chunking_phase_one_gear_super_fast_SF(struct file_struct *fs) {
     uint64_t offset = 0;
     uint32_t hash = 0;
     uint8_t *str = (uint8_t *)fs->map;
@@ -248,6 +251,7 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
         doGear_serial(str[offset], &hash);
         offset++;
         local_offset++;
+        //xzjin here should be default rolling window test
         if (skipped) {
             if (local_offset == GEAR_HASHLEN()) {
                 if ((hash != magic_number) && offset - last_offset < max_chunksize && offset != fs->test_length) {
@@ -273,11 +277,12 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
             continue;
         }
 
+        //xzjin start point
         if (offset - last_offset >= min_chunksize || offset == fs->test_length) {
             // determine a chunk boundary, chunk range [ last_offset, offset)
             if (((hash) == magic_number) || offset - last_offset >= max_chunksize || offset == fs->test_length) {
-            last_chunk_super_fast:
-            regular_hit_chunk:
+last_chunk_super_fast:
+regular_hit_chunk:
                 cb.left = last_offset;
                 cb.right = offset;
                 // size_list[chunk_id] = cb.right - cb.left;
@@ -303,7 +308,7 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
                 last_offset = offset;
                 lock_hash_slot(hash_fp);
                 fp = lookup_fp(hash_fp);
-                if (fp == NULL) {
+                if (fp == NULL) {   //fingerprint NOT duplicated
                     fp = insert_fp(hash_fp);
                     unlock_hash_slot(hash_fp);
 
@@ -336,7 +341,7 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
 
                     offset += min_chunksize - GEAR_HASHLEN();
                     skipped = 0;
-                } else {  // hit
+                } else {  // chunk duplicated
                     unlock_hash_slot(hash_fp);
                     last_recipe_fp = fp;
                     last_size_idx = 0;
@@ -350,9 +355,9 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
                         goto last_chunk_super_fast;
                     }
 
-                fetch_next_size:
+fetch_next_size:
                     tmp = next_chunk_size(fp, next_size_idx);
-                    next_size = tmp & 0xffffff;
+                    next_size = tmp & 0xffffff;     //here store the marker within the next_size
                     mark = tmp >> 24;
                     if (next_size == 0) {
                         offset += min_chunksize - HASHLEN;
@@ -363,7 +368,7 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
                         next_size_idx = 0;
                     } else if (offset + next_size > fs->test_length) {
                         offset += min_chunksize - GEAR_HASHLEN();
-                        skipped = 0;
+                        skipped = 0;    //xzjin why here shoule set skipped to 0?
 
                         // give up, can try others
                         last_recipe_fp = fp;
@@ -378,7 +383,9 @@ int chunking_phase_one_gear_super_fast(struct file_struct *fs) {
                             per_thread_stats[tid].fast_hit_chunks++;
                         else
                             skipped = 1;
-                        if (blind_jump) {
+                        if (blind_jump) {   /**xzjin blind_jump means does not check
+                                             chunk boundary (force divide the chunk),
+                                             but it still check fingerprints */
                             offset += next_size;
                             goto regular_hit_chunk;
                         } else {
@@ -441,13 +448,13 @@ int chunking_phase_one_serial_gear(struct file_struct *fs) {
             return 0;
         case 1:  // fast forward with fp check
             s_ns = time_nsec();
-            chunking_phase_one_gear_fast(fs);
+            chunking_phase_one_gear_fast_FF(fs);
             e_ns = time_nsec();
             per_thread_stats[tid].fast_cdtime += e_ns - s_ns;
             return 0;
         case 2:  // fast forward without fp check
             s_ns = time_nsec();
-            chunking_phase_one_gear_super_fast(fs);
+            chunking_phase_one_gear_super_fast_SF(fs);
             e_ns = time_nsec();
             per_thread_stats[tid].fast_cdtime += e_ns - s_ns;
             s_ns = time_nsec();
@@ -457,7 +464,7 @@ int chunking_phase_one_serial_gear(struct file_struct *fs) {
             return 0;
         case 3:  // regular FSC
             s_ns = time_nsec();
-            regular_chunking_fsc(fs);
+            regular_chunking_FSC(fs);
             e_ns = time_nsec();
             per_thread_stats[tid].regular_ctime += e_ns - s_ns;
             s_ns = time_nsec();

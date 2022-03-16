@@ -961,7 +961,7 @@ static inline void print_fingperint(uint8_t *hash, int len) {
 }
 
 // return 1 if match; else return 0
-static inline int compare_fingerprint(uint8_t *hash1, uint8_t *hash2, int len) {
+static inline int fingerprintIsSame(uint8_t *hash1, uint8_t *hash2, int len) {
     if (len % 8 == 0) {
         for (int i = 0; i < len; i += 8) {
             if (*(uint64_t *)(hash1 + i) != *(uint64_t *)(hash2 + i))
@@ -992,6 +992,7 @@ static void record_next_size(struct fp_entry_st *fp, int next_size, int pos = 0)
         printf("%lu next size %x\n", *(uint64_t *)fp->hash, next_size);
         exit(1);
     }
+    //xzjin why here will substract min_chunksize?
     next_size -= (min_chunksize - 1);
     if (lru_enabled == 0) {
         if (fp->next_sizes[0] == 0)
@@ -1091,7 +1092,7 @@ static inline void update_path(uint64_t cur_cid, fp_entry_st *old_fp) {
     if (old_fp == NULL)
         return;
     fp = recipe_fp(cur_cid - 1);
-    if (compare_fingerprint(fp, old_fp->hash, hash_pool->fp_len)) {
+    if (fingerprintIsSame(fp, old_fp->hash, hash_pool->fp_len)) {
         old_fp->chunk_id = cur_cid - 1;
         dedup_stats.num_path_switch++;
     }
@@ -1344,7 +1345,7 @@ static fp_entry_st *lookup_fp(uint8_t *hash) {
     // lock_hash_slot(idx);
     struct fp_entry_st *item = hash_pool->slots[idx];
     while (item) {
-        if (compare_fingerprint(hash, item->hash, hash_pool->fp_len)) {
+        if (fingerprintIsSame(hash, item->hash, hash_pool->fp_len)) {
             if (item->shared == 0) {
                 item->shared = 1;
                 unique_fp--;
@@ -1432,12 +1433,12 @@ static void print_stats(char *opt) {
 			dedup_stats.num_path_switch);
 
     printf("\
-			regular_ctime %lu; \n \
-			us regular_dtime %lu; \n \
-			us fast_ctime %lu; \n \
-			us fast_time %lu; \n \
-			us iotime %lu; \n \
-			us num_threads %d END\n",
+			regular_ctime %lu us; \n \
+			regular_dtime %lu us; \n \
+			fast_ctime %lu us; \n \
+			fast_time %lu us; \n \
+			iotime %lu us; \n \
+			num_threads %d END\n",
 			dedup_stats.regular_ctime / 1000,
 			dedup_stats.regular_dtime / 1000,
 			dedup_stats.fast_ctime / 1000,
