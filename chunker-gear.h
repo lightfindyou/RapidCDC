@@ -251,12 +251,14 @@ int chunking_phase_one_gear_super_fast_SF(struct file_struct *fs) {
         doGear_serial(str[offset], &hash);
         offset++;
         local_offset++;
-        //xzjin here should be default rolling window test
+        /**xzjin here should be default rolling window test
+         * but still accept the window without condition
+        */
         if (skipped) {
             if (local_offset == GEAR_HASHLEN()) {
                 if ((hash != magic_number) && offset - last_offset < max_chunksize && offset != fs->test_length) {
                     per_thread_stats[tid].fast_miss_chunks++;
-                fast_detect_fail:
+fast_detect_fail:
                     offset = last_offset;
                     local_offset = 0;
                     hash = 0;
@@ -403,8 +405,9 @@ fetch_next_size:
                                     per_thread_stats[tid].fast_miss_chunks++;
                                     skipped = 0;
                                 }
-                            } else
+                            } else{
                                 offset += next_size - GEAR_HASHLEN();
+                            }
                         }
                     }
                 }
@@ -437,6 +440,7 @@ int chunking_phase_one_serial_gear(struct file_struct *fs) {
     switch (fast_skip) {
         case 0:  // regular
             // printf("Decoupling chunking and deduplication\n");
+            printf("GEAR CDC:\n\n");
             s_ns = time_nsec();
             regular_chunking_cdc_gear(fs);
             e_ns = time_nsec();

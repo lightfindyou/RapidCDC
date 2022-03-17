@@ -593,6 +593,7 @@ int chunking_phase_one_serial_crc(struct file_struct *fs) {
     switch (fast_skip) {
         case 0:  // regular
             // printf("Decoupling chunking and deduplication\n");
+            printf("CRC CDC:\n\n");
             s_ns = time_nsec();
             regular_chunking_cdc(fs);
             e_ns = time_nsec();
@@ -620,7 +621,7 @@ int chunking_phase_one_serial_crc(struct file_struct *fs) {
             return 0;
         case 3:  // regular FSC
             s_ns = time_nsec();
-            regular_chunking_fsc(fs);
+            regular_chunking_FSC(fs);
             e_ns = time_nsec();
             per_thread_stats[tid].regular_ctime += e_ns - s_ns;
             s_ns = time_nsec();

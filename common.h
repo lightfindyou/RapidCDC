@@ -99,7 +99,7 @@ static inline void destroy_per_thread_stats() {
 static inline void collect_all_stats(int num_thread) {
     uint64_t *all = (uint64_t *)&dedup_stats;
     uint64_t *each = NULL;
-    int num_item = sizeof(dedup_stats_st) / sizeof(uint64_t);
+    int num_item = sizeof(struct dedup_stats_st) / sizeof(uint64_t);
 
     // printf("num_item %d\n", num_item);
     for (int i = 0; i < num_thread; i++) {
@@ -125,7 +125,7 @@ static uint32_t break_mask_bit = 14;
 static uint32_t break_mask = (1u << break_mask_bit) - 1;
 static uint32_t magic_number = 0;
 static int fast_skip = 0;
-static char *default_hash_str = "crc";
+const char *default_hash_str = "crc";
 
 static uint8_t *zbuffer = NULL;
 static int verbose = 0;
@@ -133,11 +133,11 @@ static int blind_jump = 0;
 static int jump_with_mark_test = 0;
 static int profile = 0;
 static int sequence_gaps = 1024;
-static char *output_file = "new-file";
+const char *output_file = "new-file";
 static int do_io = 0;
 static int do_buf_io = 0;
-static char *dump_fname = "output.dat";
-static char *dump_dir = "/tmp/";
+const char *dump_fname = "output.dat";
+const char *dump_dir = "/tmp/";
 static int dump_fd = 0;
 
 static struct io_buf_st {
@@ -730,7 +730,7 @@ typedef int (*phase_one_func)(struct file_struct *fs);
 static phase_one_func chunk_f = NULL;
 static int num_files_test = 0;
 static char *hash_name = NULL;
-static char *bench_name = "default";
+const char *bench_name = "default";
 
 static int fs_idx(struct file_struct *fs) {
     return ((uint8_t *)fs - (uint8_t *)fs_set) / sizeof(struct file_struct);
@@ -775,10 +775,10 @@ static inline void help() {
 
     printf("NOTE: either -f or -d must be used. If -f and -d is used together, -d will be used, the dir (end with '/') should include all files, subdir is not accepted\n");
     printf("\nAvailable RapidCDC modes include:\n");
-    printf("\t-FF: FF+RWT+FPT (Fingerprint Test)\n");
-    printf("\t-SF: FF+RWT (Rolling Window Test)\n");
-    printf("\t-JB: FF without further boundary test\n");
-    printf("\t-JM: FF+MT (Marker Test)\n");
+    printf("\t-FF: (FF+RWT+FPT) (Fingerprint Test)\n");
+    printf("\t-SF: (FF+RWT) (Rolling Window Test)\n");
+    printf("\t-JB: (FF) without further boundary test\n");
+    printf("\t-JM: (FF+MT) (Marker Test)\n");
     printf("\nFor more configuration options, refer to parse_args()\n\n");
 }
 
@@ -904,7 +904,7 @@ int parse_args(int argc, char *argv[]) {
     }
 
     if (hash_name == NULL) {
-        hash_name = default_hash_str;
+        hash_name = (char*) default_hash_str;
     }
 
     if (set_chunk_func(hash_name))
@@ -1720,7 +1720,7 @@ static char *random_data(int len) {
     }
 }
 
-static int create_file(char *dir, char *fname) {
+static int create_file(char *dir, const char *fname) {
     int fd = 0;
     char path[256];
     bzero(path, sizeof(path));
@@ -1736,7 +1736,7 @@ static int create_file(char *dir, char *fname) {
     return fd;
 }
 
-static int create_dump_file(char *dir, char *fname) {
+static int create_dump_file(const char *dir, const char *fname) {
     int fd = 0;
     char path[256];
     bzero(path, sizeof(path));
