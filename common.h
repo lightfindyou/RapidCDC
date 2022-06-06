@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -59,6 +60,29 @@ time_nsec(void) {
     clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
     return ts.tv_sec * UINT64_C(1000000000) + ts.tv_nsec;
 }
+
+uint64_t jc_condition_mask[] = {
+    //Do not use 1-32B, for aligent usage
+        0x0000000000000000,// 1B
+        0x0000000001000000,// 2B
+        0x0000000003000000,// 4B
+        0x0000010003000000,// 8B
+        0x0000090003000000,// 16B
+        0x0000190003000000,// 32B
+
+        0x0000590003000000,// 64B
+        0x0000590003100000,// 128B
+        0x0000590003500000,// 256B
+        0x0000590003510000,// 512B
+        0x0000590003530000,// 1KB
+        0x0000590103530000,// 2KB
+        0x0000d90103530000,// 4KB
+        0x0000d90303530000,// 8KB
+        0x0000d90303531000,// 16KB
+        0x0000d90303533000,// 32KB
+        0x0000d90303537000,// 64KB
+        0x0000d90703537000// 128KB
+};
 
 #define NUM_TIME 6
 struct dedup_stats_st {
@@ -125,11 +149,25 @@ static uint32_t break_mask_bit = 14;
 static uint32_t break_mask = (1u << break_mask_bit) - 1;
 static uint32_t magic_number = 0;
 static int fast_skip = 0;
+
+/*
+fast_skip = 1; -FF(FF+RWT+FPT) // fast
+fast_skip = 2; -SF(FF+RWT) -JB(FF) -JM(FF+MT) // super fast
+fast_skip = 3; -FSC 
+fast_skip = 99 -SQ ;  // fixed-size-chunking
+fast_skip = 100; -T  // generate trace
+*/
+
+
 const char *default_hash_str = "crc";
 
 static uint8_t *zbuffer = NULL;
 static int verbose = 0;
 static int blind_jump = 0;
+static int jc = 0;
+static uint64_t jc_break_mask = 0;
+static uint64_t jc_jump_mask = 0;
+static uint64_t jc_jump_len = 0;
 static int jump_with_mark_test = 0;
 static int profile = 0;
 static int sequence_gaps = 1024;
@@ -778,6 +816,7 @@ static inline void help() {
     printf("\t-FF: (FF+RWT+FPT) (Fingerprint Test)\n");
     printf("\t-SF: (FF+RWT) (Rolling Window Test)\n");
     printf("\t-JB: (FF) without further boundary test\n");
+    printf("\t-JB -JC: (FF) without further boundary test and use gear\n");
     printf("\t-JM: (FF+MT) (Marker Test)\n");
     printf("\nFor more configuration options, refer to parse_args()\n\n");
 }
@@ -873,6 +912,8 @@ int parse_args(int argc, char *argv[]) {
         } else if (strncmp(argv[i], "-JB", 3) == 0) {
             blind_jump = 1;
             fast_skip = 2;
+        } else if (strncmp(argv[i], "-JC", 3) == 0) {
+            jc = 1;
         } else if (strncmp(argv[i], "-JM", 3) == 0) {
             jump_with_mark_test = 1;
             fast_skip = 2;
@@ -901,6 +942,15 @@ int parse_args(int argc, char *argv[]) {
             help();
             return 1;
         }
+    }
+
+    if(jc){
+        int index = log2(8192);
+        assert(index>6);
+        assert(index<17);
+        jc_break_mask = jc_condition_mask[index-1];
+        jc_jump_mask = jc_condition_mask[index-2];
+        jc_jump_len = 4096;
     }
 
     if (hash_name == NULL) {
@@ -1144,6 +1194,7 @@ static void print_sequence_list(void) {
     printf("END: PRINT SEQUENCE LIST FOR %s avg %d mini %d max %d\n", bench_name, 1 << break_mask_bit, min_chunksize, max_chunksize);
 }
 
+//may be chunk distributtion
 struct chunk_size_dist {
     int start_size;
     int end_size;
@@ -1447,6 +1498,14 @@ static void print_stats(char *opt) {
 			num_threads);
     // print_chunk_dist();
     print_lru_hits();
+
+    printf("\
+			use jc %d;\n \
+			jc_break_mask 0x%lx:%lu;\n \
+			jc_jump_mask 0x%lx:%lu;\n \
+			jc_jump_len %d;\n",
+            jc, jc_break_mask, jc_break_mask,
+            jc_jump_mask, jc_jump_mask, jc_jump_len);
 }
 
 static int init_fs(struct file_struct *fs) {

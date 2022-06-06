@@ -2,7 +2,7 @@ SRC=test-main.cpp ./xxhash.c
 BIN=cdc
 BIN_AVX=cdc-avx
 Debug_Bin=cdc.debug
-FLAGS= -lbsd -lpthread
+FLAGS= -lbsd -lpthread -lm
 
 all:
 	gcc $(FLAGS) -O3 -o $(BIN) $(SRC) -lssl -lcrypto $(FLAGS)
