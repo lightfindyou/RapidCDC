@@ -814,10 +814,12 @@ static inline void help() {
     printf("NOTE: either -f or -d must be used. If -f and -d is used together, -d will be used, the dir (end with '/') should include all files, subdir is not accepted\n");
     printf("\nAvailable RapidCDC modes include:\n");
     printf("\t-FF: (FF+RWT+FPT) (Fingerprint Test)\n");
+    printf("\t-FF -JC: (FF+RWT+FPT) (Fingerprint Test) and use JC\n");
     printf("\t-SF: (FF+RWT) (Rolling Window Test)\n");
     printf("\t-JB: (FF) without further boundary test\n");
-    printf("\t-JB -JC: (FF) without further boundary test and use gear\n");
+    printf("\t-JB -JC: (FF) without further boundary test and use JC\n");
     printf("\t-JM: (FF+MT) (Marker Test)\n");
+    printf("\t-FSC: fixe-size chunking\n");
     printf("\nFor more configuration options, refer to parse_args()\n\n");
 }
 
