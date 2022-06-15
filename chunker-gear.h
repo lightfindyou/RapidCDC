@@ -679,17 +679,18 @@ int chunking_phase_one_gear_super_fast_SF(struct file_struct *fs) {
     assert(fast_skip == 2);
     reset_chunk_boundary_list(tid);
 
+/*
     if (fs->length <= GEAR_HASHLEN() || fs->length < 2 * min_chunksize) {
         printf("file:%s too small\n", fs->fname);
         assert(0);
         return 0;
     }
-
+*/
     while (offset < fs->test_length) {
-        {
-            *&hash = ((*&hash << 1) + crct[str[offset] & 0xff]) & break_mask;
-            per_thread_stats[tid].num_rollings++; 
-        }
+//        {
+//            *&hash = ((*&hash << 1) + crct[str[offset] & 0xff]) & break_mask;
+//            per_thread_stats[tid].num_rollings++; 
+//        }
         doGear_serial(str[offset], &hash);
         offset++;
         local_offset++;

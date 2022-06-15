@@ -144,6 +144,7 @@ static inline void collect_all_stats(int num_thread) {
 
 static int adaptive_window = 0;
 static uint32_t min_chunksize = 2 * 1024;
+static uint32_t avg_chunksize = 8 * 1024;
 static uint32_t max_chunksize = 64 * 1024;
 static uint32_t break_mask_bit = 14;
 static uint32_t break_mask = (1u << break_mask_bit) - 1;
@@ -802,6 +803,7 @@ static inline void help() {
     printf("Help: \n \
 	-f fname \n \
 	-m max_chunksize(KB)\n \
+	-c average_chunksize(KB)\n \
 	-M max_chunksize(KB)\n \
 	-ts test_size \n \
 	-nm magic_number\n \
@@ -832,6 +834,12 @@ int parse_args(int argc, char *argv[]) {
         } else if (strncmp(argv[i], "-m", 2) == 0) {
             assert(i < argc - 1);
             min_chunksize = atoi(argv[i + 1]) * 1024;
+            i++;
+        } else if (strncmp(argv[i], "-c", 2) == 0) {
+            assert(i < argc - 1);
+            avg_chunksize = atoi(argv[i + 1]) * 1024;
+            break_mask_bit = log2(avg_chunksize);
+            break_mask = (1u << break_mask_bit) - 1;
             i++;
         } else if (strncmp(argv[i], "-M", 2) == 0) {
             assert(i < argc - 1);
@@ -947,12 +955,14 @@ int parse_args(int argc, char *argv[]) {
     }
 
     if(jc){
-        int index = log2(8192);
+        int index = log2(avg_chunksize);
         assert(index>6);
         assert(index<17);
-        jc_break_mask = jc_condition_mask[index-1];
-        jc_jump_mask = jc_condition_mask[index-2];
-        jc_jump_len = 4096;
+        jc_break_mask = (1u << (index - 1)) - 1;
+        jc_jump_mask = (1u << (index - 2)) - 1;
+//        jc_break_mask = jc_condition_mask[index-1];
+//        jc_jump_mask = jc_condition_mask[index-2];
+        jc_jump_len = avg_chunksize/2;
     }
 
     if (hash_name == NULL) {
@@ -1464,7 +1474,7 @@ static void print_stats(char *opt) {
 			total_bytes %lu; \n \
 			unique_chunks %lu; \n \
 			total_chunks %lu; \n \
-			dedup_ratio %.2f; \n \
+			dedup_ratio %.2f, %.2f; \n \
 			avg_chunk_size %.2f; \n \
 			run_mode %d; \n \
 			fast_hit_boundary %lu; \n \
@@ -1479,6 +1489,7 @@ static void print_stats(char *opt) {
 			dedup_stats.uniq_size, dedup_stats.total_size,
 			dedup_stats.uniq_chunks, dedup_stats.total_chunks,
 			1.0 * dedup_stats.total_size / dedup_stats.uniq_size,
+			100.0 * (dedup_stats.total_size - dedup_stats.uniq_size)/dedup_stats.total_size,
 			dedup_stats.total_size / dedup_stats.total_chunks * 1.0,
 			mode, dedup_stats.fast_hit_chunks, dedup_stats.fast_miss_chunks,
 			dedup_stats.fast_false_hit_chunks, unique_fp, dedup_stats.num_rollings,
