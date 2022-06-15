@@ -20,6 +20,7 @@
 #include <openssl/sha.h>
 #include <pthread.h>
 #include <time.h>
+#include <openssl/md5.h>
 
 //#include "lib/lz4.h"
 #include "./xxhash.h"
@@ -68,20 +69,20 @@ uint64_t jc_condition_mask[] = {
         0x0000000003000000,// 4B
         0x0000010003000000,// 8B
         0x0000090003000000,// 16B
-        0x0000190003000000,// 32B
+        0x0000190003000000,// 32B   5
 
         0x0000590003000000,// 64B
         0x0000590003100000,// 128B
         0x0000590003500000,// 256B
         0x0000590003510000,// 512B
-        0x0000590003530000,// 1KB
+        0x0000590003530000,// 1KB   10
         0x0000590103530000,// 2KB
         0x0000d90103530000,// 4KB
         0x0000d90303530000,// 8KB
-        0x0000d90303531000,// 16KB
+        0x0000d90303531000,// 16KB  14
         0x0000d90303533000,// 32KB
         0x0000d90303537000,// 64KB
-        0x0000d90703537000// 128KB
+        0x0000d90703537000// 128KB  17
 };
 
 #define NUM_TIME 6
@@ -147,7 +148,7 @@ static uint32_t min_chunksize = 2 * 1024;
 static uint32_t avg_chunksize = 8 * 1024;
 static uint32_t max_chunksize = 64 * 1024;
 static uint32_t break_mask_bit = 14;
-static uint32_t break_mask = (1u << break_mask_bit) - 1;
+static uint64_t break_mask = (1u << break_mask_bit) - 1;
 static uint32_t magic_number = 0;
 static int fast_skip = 0;
 
@@ -203,8 +204,11 @@ struct chunk_boundary {
     ((__v16si)table)[idx]
 
 #define _A16 __attribute__((__aligned__(16)))
-static const uint32_t _A16 crct[256] =
-    {
+#define SymbolCount 256
+#define SeedLength 64
+#define DigistLength 16
+
+static uint64_t crct[256] = {
         0x00000000,
         0x77073096,
         0xEE0E612C,
@@ -462,6 +466,25 @@ static const uint32_t _A16 crct[256] =
         0x5A05DF1B,
         0x2D02EF8D,
 };
+
+void init_gear(){
+    char seed[SeedLength];
+    for(int i=0; i<SymbolCount; i++){
+        for(int j=0; j<SeedLength; j++){
+            seed[j] = i;
+        }
+
+        crct[i] = 0;
+        unsigned char md5_result[DigistLength];
+
+        MD5_CTX md5_ctx;
+        MD5_Init(&md5_ctx);
+        MD5_Update(&md5_ctx, seed, SeedLength);
+        MD5_Final(md5_result, &md5_ctx);
+
+        memcpy(&crct[i], md5_result, sizeof(uint64_t));
+    }
+}
 
 static const uint32_t crcu[256] =
     {
@@ -734,7 +757,8 @@ struct file_struct {
 };
 
 static void *map_file(struct file_struct *fs) {
-    int ret;
+    ssize_t ret = 1;
+    ssize_t wantToRead;
     fs->fd = open(fs->fname, O_RDONLY);
     if (fs->fd < 0) return NULL;
     fs->length = lseek(fs->fd, 0, SEEK_END);
@@ -743,10 +767,15 @@ static void *map_file(struct file_struct *fs) {
     fs->map = (void *)calloc(fs->test_length + 10, sizeof(char));
     assert(fs->map);
     assert(0 == lseek(fs->fd, 0, SEEK_SET));
-    ret = read(fs->fd, fs->map, fs->test_length);
-    if (ret != fs->test_length) {
-        printf("fd %d ret %d %lu\n", fs->fd, ret, fs->test_length);
-        assert(0);
+
+    wantToRead = fs->test_length;
+    while(ret && wantToRead){
+        ret = read(fs->fd, fs->map, fs->test_length);
+        wantToRead -= ret;
+        if (ret < 0) {
+            printf("fd %d ret %lu %lu\n", fs->fd, ret, fs->test_length);
+            assert(0);
+        }
     }
 
     return fs->map;
@@ -825,6 +854,8 @@ static inline void help() {
     printf("\nFor more configuration options, refer to parse_args()\n\n");
 }
 
+#define zeroGearMask 0
+
 int parse_args(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (strncmp(argv[i], "-f", 2) == 0) {
@@ -839,7 +870,12 @@ int parse_args(int argc, char *argv[]) {
             assert(i < argc - 1);
             avg_chunksize = atoi(argv[i + 1]) * 1024;
             break_mask_bit = log2(avg_chunksize);
+#if zereGearMask
             break_mask = (1u << break_mask_bit) - 1;
+#else
+            int index = log2(avg_chunksize);
+            break_mask = jc_condition_mask[index];
+#endif //zereGearMask
             i++;
         } else if (strncmp(argv[i], "-M", 2) == 0) {
             assert(i < argc - 1);
@@ -953,15 +989,19 @@ int parse_args(int argc, char *argv[]) {
             return 1;
         }
     }
+    init_gear();
 
     if(jc){
         int index = log2(avg_chunksize);
         assert(index>6);
         assert(index<17);
+#if zereGearMask
         jc_break_mask = (1u << (index - 1)) - 1;
         jc_jump_mask = (1u << (index - 2)) - 1;
-//        jc_break_mask = jc_condition_mask[index-1];
-//        jc_jump_mask = jc_condition_mask[index-2];
+#else
+        jc_break_mask = jc_condition_mask[index-1];
+        jc_jump_mask = jc_condition_mask[index-2];
+#endif  //zereGearMask
         jc_jump_len = avg_chunksize/2;
     }
 
@@ -1467,14 +1507,19 @@ static void print_stats(char *opt) {
 			lru_enabled %d; \n \
 			list_length %d;\n",
 			lru_enabled, list_length);
+
     printf("\
-			path_switch %d; \n \
-			mode_switch %lu; \n \
 			unique_bytes %lu; \n \
 			total_bytes %lu; \n \
 			unique_chunks %lu; \n \
-			total_chunks %lu; \n \
-			dedup_ratio %.2f, %.2f; \n \
+			total_chunks %lu; \n",
+			dedup_stats.uniq_size, dedup_stats.total_size,
+			dedup_stats.uniq_chunks, dedup_stats.total_chunks);
+
+    printf("\
+			path_switch %d; \n \
+			mode_switch %lu; \n \
+			dedup_ratio %.2f, \x1B[32m%.2f\x1B[37m; \n \
 			avg_chunk_size %.2f; \n \
 			run_mode %d; \n \
 			fast_hit_boundary %lu; \n \
@@ -1486,8 +1531,6 @@ static void print_stats(char *opt) {
 			num_io %lu; \n \
 			num_path_switch %lu; \n",
 			path_switch, dedup_stats.mode_switch,
-			dedup_stats.uniq_size, dedup_stats.total_size,
-			dedup_stats.uniq_chunks, dedup_stats.total_chunks,
 			1.0 * dedup_stats.total_size / dedup_stats.uniq_size,
 			100.0 * (dedup_stats.total_size - dedup_stats.uniq_size)/dedup_stats.total_size,
 			dedup_stats.total_size / dedup_stats.total_chunks * 1.0,
@@ -1500,7 +1543,7 @@ static void print_stats(char *opt) {
 			regular_ctime %lu us; \n \
 			regular_dtime %lu us; \n \
 			fast_ctime %lu us; \n \
-			fast_time %lu us; \n \
+			fast_time \x1B[32m%lu \x1B[37mus; \n \
 			iotime %lu us; \n \
 			num_threads %d END\n",
 			dedup_stats.regular_ctime / 1000,
@@ -1516,9 +1559,11 @@ static void print_stats(char *opt) {
 			use jc %d;\n \
 			jc_break_mask 0x%lx:%lu;\n \
 			jc_jump_mask 0x%lx:%lu;\n \
-			jc_jump_len %d;\n",
+			jc_jump_len %lu \n\
+			break mask: %lx\n",
             jc, jc_break_mask, jc_break_mask,
-            jc_jump_mask, jc_jump_mask, jc_jump_len);
+            jc_jump_mask, jc_jump_mask, jc_jump_len,
+            break_mask);
 }
 
 static int init_fs(struct file_struct *fs) {
@@ -1756,7 +1801,7 @@ static int extract_static_ops(int tid, struct pass_st *passes, int num) {
             idx++;
         }
 
-        printf("Total chunk %lu, range %d, Sequence Len: %d num_bar %d\n", per_thread_stats[tid].total_chunks, range, seq_len, num_bar);
+        printf("Total chunk %lu, range %lu, Sequence Len: %d num_bar %d\n", per_thread_stats[tid].total_chunks, range, seq_len, num_bar);
     }
     // sort_op_struct();
     // print_op_struct();
@@ -1997,7 +2042,7 @@ static int generate_microbench(struct file_struct *fs) {
         int fd = create_file(dir, output_file);
         dump_file(fd, buf, buf_offset);
         close_file(fd);
-        printf("A file with %d bytes created\n", buf_offset);
+        printf("A file with %lu bytes created\n", buf_offset);
     }
 
     if (random_buf)

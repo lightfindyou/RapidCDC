@@ -13,11 +13,12 @@ maxChunk=(8 32 128)
 #DedupDIR=("/home/xzjin/backupData/bbcNews/" "/home/xzjin/backupData/gcc/" "/home/xzjin/backupData/Paper/" "/home/xzjin/backupData/VMI/" "/home/xzjin/backupData/VMB/")
 # DedupDIR=("/home/xzjin/backupData/bbcNews/")
 # DedupDIR=("/home/xzjin/backupData/bbcSingleDir/")
-DedupDIR=("/home/xzjin/backupData/gcc/")
+# DedupDIR=("/home/xzjin/backupData/gcc/")
 # DedupDIR=("/home/xzjin/backupData/Paper/")
+# DedupDIR=("/home/xzjin/backupData/PaperSingleDir/")
 # DedupDIR=("/home/xzjin/backupData/VMI/")
 # DedupDIR=("/home/xzjin/backupData/VMB/")
-# DedupDIR=("/home/xzjin/backupData/gcc_part/")
+DedupDIR=("/home/xzjin/backupData/gcc_part/")
 # chunkMethod=("fixed" "rabin" "tttd" "ae" "fastcdc" "gearjump" "leap" )
 BackupDir=/home/xzjin/test_destor/data/
 
@@ -31,7 +32,7 @@ do
 		maxChunkSize="chunk-max-size ${maxChunk[s]}"
 		minChunkSize="chunk-min-size 512"
 		set -o xtrace
-#		/home/xzjin/src/RapidCDC/cdc -c ${avgChunk[s]} -M ${maxChunk[s]} -d $dir -H gear -JB
+		/home/xzjin/src/RapidCDC/cdc -c ${avgChunk[s]} -M ${maxChunk[s]} -d $dir -H gear -JB
 		/home/xzjin/src/RapidCDC/cdc -c ${avgChunk[s]} -M ${maxChunk[s]} -d $dir -H gear -JB -JC
 		set +o xtrace
 		echo; echo;

@@ -220,7 +220,7 @@ int chunking_phase_one_crc_fast(struct file_struct *fs) {
     reset_chunk_boundary_list(tid);
 
     if (fs->length <= HASHLEN || fs->length < 2 * min_chunksize) {
-		printf("fs->length:%d, HASHLEN:%d, min_chunkSize:%d\n", 
+		printf("fs->length:%lu, HASHLEN:%d, min_chunkSize:%d\n", 
 			fs->length, HASHLEN, min_chunksize);
         assert(0);
         return 0;

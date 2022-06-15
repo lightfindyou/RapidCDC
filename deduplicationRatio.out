@@ -1,0 +1,1248 @@
+### VMB 
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/VMB/ -H gear -JB
+Info: tatal 73 files in /home/xzjin/backupData/VMB/, 73 files to be tested
+max chunk id: 38273024
+main Thread exit!
+Output:
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0;
+ 			list_length 1;
+			path_switch 0;
+ 			mode_switch 0;
+ 			unique_bytes 20818701968;
+ 			total_bytes 84076086049;
+ 			unique_chunks 3713951;
+ 			total_chunks 12483224;
+ 			dedup_ratio 4.04, 75.24;
+ 			avg_chunk_size 6735.00;
+ 			run_mode 12;
+ 			fast_hit_boundary 8639916;
+ 			fast_miss_chunks 0;
+ 			fast_false_hit_chunks 0;
+ 			unique_FP 2278547;
+ 			num_rollings 13086984396;
+ 			num_fingerprintings 12483224;
+ 			num_io 0;
+ 			num_path_switch 0;
+			regular_ctime 0 us;
+ 			regular_dtime 0 us;
+ 			fast_ctime 0 us;
+ 			fast_time 108596603 us;
+ 			iotime 0 us;
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0
+			break mask: d90103530000
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/VMB/ -H gear -JB -JC
+Info: tatal 73 files in /home/xzjin/backupData/VMB/, 73 files to be tested
+max chunk id: 38273024
+main Thread exit!
+Output:
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0;
+ 			list_length 1;
+			path_switch 0;
+ 			mode_switch 0;
+ 			unique_bytes 20427242389;
+ 			total_bytes 84076078423;
+ 			unique_chunks 4613823;
+ 			total_chunks 14325383;
+ 			dedup_ratio 4.12, 75.70;
+ 			avg_chunk_size 5869.00;
+ 			run_mode 12;
+ 			fast_hit_boundary 9548118;
+ 			fast_miss_chunks 0;
+ 			fast_false_hit_chunks 0;
+ 			unique_FP 2780732;
+ 			num_rollings 10652581722;
+ 			num_fingerprintings 14325383;
+ 			num_io 0;
+ 			num_path_switch 0;
+			regular_ctime 0 us;
+ 			regular_dtime 0 us;
+ 			fast_ctime 0 us;
+ 			fast_time 106588867 us;
+ 			iotime 0 us;
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0x590103530000:97860885610496;
+ 			jc_jump_mask 0x590003530000:97856590643200;
+ 			jc_jump_len 2048
+			break mask: d90103530000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/VMB/ -H gear -JB
+Info: tatal 73 files in /home/xzjin/backupData/VMB/, 73 files to be tested
+max chunk id: 38273024
+main Thread exit!
+Output:
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0;
+ 			list_length 1;
+			path_switch 0;
+ 			mode_switch 0;
+ 			unique_bytes 22518533301;
+ 			total_bytes 84076086049;
+ 			unique_chunks 1259459;
+ 			total_chunks 3594823;
+ 			dedup_ratio 3.73, 73.22;
+ 			avg_chunk_size 23388.00;
+ 			run_mode 12;
+ 			fast_hit_boundary 2279515;
+ 			fast_miss_chunks 0;
+ 			fast_false_hit_chunks 0;
+ 			unique_FP 790754;
+ 			num_rollings 19463622671;
+ 			num_fingerprintings 3594823;
+ 			num_io 0;
+ 			num_path_switch 0;
+			regular_ctime 0 us;
+ 			regular_dtime 0 us;
+ 			fast_ctime 0 us;
+ 			fast_time 114627754 us;
+ 			iotime 0 us;
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0
+			break mask: d90303531000
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/VMB/ -H gear -JB -JC
+Info: tatal 73 files in /home/xzjin/backupData/VMB/, 73 files to be tested
+max chunk id: 38273024
+main Thread exit!
+Output:
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0;
+ 			list_length 1;
+			path_switch 0;
+ 			mode_switch 0;
+ 			unique_bytes 21840413747;
+ 			total_bytes 84076066738;
+ 			unique_chunks 1850346;
+ 			total_chunks 4758661;
+ 			dedup_ratio 3.85, 74.02;
+ 			avg_chunk_size 17668.00;
+ 			run_mode 12;
+ 			fast_hit_boundary 2826909;
+ 			fast_miss_chunks 0;
+ 			fast_false_hit_chunks 0;
+ 			unique_FP 1123372;
+ 			num_rollings 17448762193;
+ 			num_fingerprintings 4758661;
+ 			num_io 0;
+ 			num_path_switch 0;
+			regular_ctime 0 us;
+ 			regular_dtime 0 us;
+ 			fast_ctime 0 us;
+ 			fast_time 112110043 us;
+ 			iotime 0 us;
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303530000:238606963900416;
+ 			jc_jump_mask 0xd90103530000:238598373965824;
+ 			jc_jump_len 8192
+			break mask: d90303531000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/VMB/ -H gear -JB
+Info: tatal 73 files in /home/xzjin/backupData/VMB/, 73 files to be tested
+max chunk id: 38273024
+main Thread exit!
+Output:
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0;
+ 			list_length 1;
+			path_switch 0;
+ 			mode_switch 0;
+ 			unique_bytes 24730098486;
+ 			total_bytes 84076086049;
+ 			unique_chunks 361036;
+ 			total_chunks 930580;
+ 			dedup_ratio 3.40, 70.59;
+ 			avg_chunk_size 90348.00;
+ 			run_mode 12;
+ 			fast_hit_boundary 552273;
+ 			fast_miss_chunks 0;
+ 			fast_false_hit_chunks 0;
+ 			unique_FP 239398;
+ 			num_rollings 23242521860;
+ 			num_fingerprintings 930580;
+ 			num_io 0;
+ 			num_path_switch 0;
+			regular_ctime 0 us;
+ 			regular_dtime 0 us;
+ 			fast_ctime 0 us;
+ 			fast_time 119605595 us;
+ 			iotime 0 us;
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0
+			break mask: d90303537000
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/VMB/ -H gear -JB -JC
+Info: tatal 73 files in /home/xzjin/backupData/VMB/, 73 files to be tested
+max chunk id: 38273024
+main Thread exit!
+Output:
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0;
+ 			list_length 1;
+			path_switch 0;
+ 			mode_switch 0;
+ 			unique_bytes 23969801466;
+ 			total_bytes 84076076999;
+ 			unique_chunks 570749;
+ 			total_chunks 1306600;
+ 			dedup_ratio 3.51, 71.49;
+ 			avg_chunk_size 64347.00;
+ 			run_mode 12;
+ 			fast_hit_boundary 706855;
+ 			fast_miss_chunks 0;
+ 			fast_false_hit_chunks 0;
+ 			unique_FP 363103;
+ 			num_rollings 21814873024;
+ 			num_fingerprintings 1306600;
+ 			num_io 0;
+ 			num_path_switch 0;
+			regular_ctime 0 us;
+ 			regular_dtime 0 us;
+ 			fast_ctime 0 us;
+ 			fast_time 117349327 us;
+ 			iotime 0 us;
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303533000:238606963912704;
+ 			jc_jump_mask 0xd90303531000:238606963904512;
+ 			jc_jump_len 32768
+			break mask: d90303537000
++ set +o xtrace
+
+
+### VMI
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/VMI/ -H gear -JB
+Info: tatal 146 files in /home/xzjin/backupData/VMI/, 146 files to be tested
+max chunk id: 76546048
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 17160190950; 
+ 			total_bytes 42906878976; 
+ 			unique_chunks 3255384; 
+ 			total_chunks 8172878; 
+ 			dedup_ratio 2.50, 60.01; 
+ 			avg_chunk_size 5249.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 4819427; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 2005521; 
+ 			num_rollings 10431150982; 
+ 			num_fingerprintings 8172878; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 61777674 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90103530000
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/VMI/ -H gear -JB -JC
+Info: tatal 146 files in /home/xzjin/backupData/VMI/, 146 files to be tested
+max chunk id: 76546048
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 16817220334; 
+ 			total_bytes 42906878976; 
+ 			unique_chunks 4157280; 
+ 			total_chunks 10639130; 
+ 			dedup_ratio 2.55, 60.81; 
+ 			avg_chunk_size 4032.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 6378594; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 2532934; 
+ 			num_rollings 8175536189; 
+ 			num_fingerprintings 10639130; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 60249885 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0x590103530000:97860885610496;
+ 			jc_jump_mask 0x590003530000:97856590643200;
+ 			jc_jump_len 2048 
+			break mask: d90103530000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/VMI/ -H gear -JB
+Info: tatal 146 files in /home/xzjin/backupData/VMI/, 146 files to be tested
+max chunk id: 76546048
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 19093725083; 
+ 			total_bytes 42906878976; 
+ 			unique_chunks 1158530; 
+ 			total_chunks 2673003; 
+ 			dedup_ratio 2.25, 55.50; 
+ 			avg_chunk_size 16051.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 1442908; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 745824; 
+ 			num_rollings 16179981626; 
+ 			num_fingerprintings 2673003; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 67057171 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303531000
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/VMI/ -H gear -JB -JC
+Info: tatal 146 files in /home/xzjin/backupData/VMI/, 146 files to be tested
+max chunk id: 76546048
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 18096465280; 
+ 			total_bytes 42906878976; 
+ 			unique_chunks 1731834; 
+ 			total_chunks 4211458; 
+ 			dedup_ratio 2.37, 57.82; 
+ 			avg_chunk_size 10188.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 2395205; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 1082557; 
+ 			num_rollings 14005439589; 
+ 			num_fingerprintings 4211458; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 64746720 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303530000:238606963900416;
+ 			jc_jump_mask 0xd90103530000:238598373965824;
+ 			jc_jump_len 8192 
+			break mask: d90303531000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/VMI/ -H gear -JB
+Info: tatal 146 files in /home/xzjin/backupData/VMI/, 146 files to be tested
+max chunk id: 76546048
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 23585945420; 
+ 			total_bytes 42906878976; 
+ 			unique_chunks 375492; 
+ 			total_chunks 727434; 
+ 			dedup_ratio 1.82, 45.03; 
+ 			avg_chunk_size 58983.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 313395; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 264585; 
+ 			num_rollings 21302191417; 
+ 			num_fingerprintings 727434; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 73601973 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303537000
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/VMI/ -H gear -JB -JC
+Info: tatal 146 files in /home/xzjin/backupData/VMI/, 146 files to be tested
+max chunk id: 76546048
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 21484104429; 
+ 			total_bytes 42906878976; 
+ 			unique_chunks 579462; 
+ 			total_chunks 1241155; 
+ 			dedup_ratio 2.00, 49.93; 
+ 			avg_chunk_size 34570.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 608505; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 387390; 
+ 			num_rollings 18782019931; 
+ 			num_fingerprintings 1241155; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 69932276 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303533000:238606963912704;
+ 			jc_jump_mask 0xd90303531000:238606963904512;
+ 			jc_jump_len 32768 
+			break mask: d90303537000
++ set +o xtrace
+
+### Paper
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/PaperSingleDir/ -H gear -JB
+Info: tatal 1179 files in /home/xzjin/backupData/PaperSingleDir/, 1179 files to be tested
+max chunk id: 618135552
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 1913346115; 
+ 			total_bytes 2209768940; 
+ 			unique_chunks 362665; 
+ 			total_chunks 419682; 
+ 			dedup_ratio 1.15, 13.41; 
+ 			avg_chunk_size 5265.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 51527; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 326267; 
+ 			num_rollings 1171081569; 
+ 			num_fingerprintings 419682; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 5795897 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90103530000
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/PaperSingleDir/ -H gear -JB -JC
+Info: tatal 1179 files in /home/xzjin/backupData/PaperSingleDir/, 1179 files to be tested
+max chunk id: 618135552
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 1878709966; 
+ 			total_bytes 2209686905; 
+ 			unique_chunks 463753; 
+ 			total_chunks 546140; 
+ 			dedup_ratio 1.18, 14.98; 
+ 			avg_chunk_size 4046.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 74782; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 415000; 
+ 			num_rollings 918080769; 
+ 			num_fingerprintings 546140; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 4872285 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0x590103530000:97860885610496;
+ 			jc_jump_mask 0x590003530000:97856590643200;
+ 			jc_jump_len 2048 
+			break mask: d90103530000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/PaperSingleDir/ -H gear -JB
+Info: tatal 1179 files in /home/xzjin/backupData/PaperSingleDir/, 1179 files to be tested
+max chunk id: 618135552
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 1972967397; 
+ 			total_bytes 2209768940; 
+ 			unique_chunks 121612; 
+ 			total_chunks 137755; 
+ 			dedup_ratio 1.12, 10.72; 
+ 			avg_chunk_size 16041.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 14379; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 110130; 
+ 			num_rollings 1711600328; 
+ 			num_fingerprintings 137755; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 5906361 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303531000
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/PaperSingleDir/ -H gear -JB -JC
+Info: tatal 1179 files in /home/xzjin/backupData/PaperSingleDir/, 1179 files to be tested
+max chunk id: 618135552
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 1953570617; 
+ 			total_bytes 2209697827; 
+ 			unique_chunks 186686; 
+ 			total_chunks 213077; 
+ 			dedup_ratio 1.13, 11.59; 
+ 			avg_chunk_size 10370.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 23355; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 168668; 
+ 			num_rollings 1550641634; 
+ 			num_fingerprintings 213077; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 5710491 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303530000:238606963900416;
+ 			jc_jump_mask 0xd90103530000:238598373965824;
+ 			jc_jump_len 8192 
+			break mask: d90303531000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/PaperSingleDir/ -H gear -JB
+Info: tatal 1179 files in /home/xzjin/backupData/PaperSingleDir/, 1179 files to be tested
+max chunk id: 618135552
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 2019386673; 
+ 			total_bytes 2209768940; 
+ 			unique_chunks 34673; 
+ 			total_chunks 38250; 
+ 			dedup_ratio 1.09, 8.62; 
+ 			avg_chunk_size 57771.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 2991; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 32002; 
+ 			num_rollings 1933958035; 
+ 			num_fingerprintings 38250; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 6227016 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303537000
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/PaperSingleDir/ -H gear -JB -JC
+Info: tatal 1179 files in /home/xzjin/backupData/PaperSingleDir/, 1179 files to be tested
+max chunk id: 618135552
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 2000162983; 
+ 			total_bytes 2209721845; 
+ 			unique_chunks 56417; 
+ 			total_chunks 62921; 
+ 			dedup_ratio 1.10, 9.48; 
+ 			avg_chunk_size 35118.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 5580; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 51689; 
+ 			num_rollings 1860553408; 
+ 			num_fingerprintings 62921; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 6133204 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303533000:238606963912704;
+ 			jc_jump_mask 0xd90303531000:238606963904512;
+ 			jc_jump_len 32768 
+			break mask: d90303537000
++ set +o xtrace
+
+
+### news
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/bbcSingleDir/ -H gear -JB
+Info: tatal 8899 files in /home/xzjin/backupData/bbcSingleDir/, 8899 files to be tested
+max chunk id: 4665638912
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 1610484779; 
+ 			total_bytes 5013705903; 
+ 			unique_chunks 290932; 
+ 			total_chunks 956505; 
+ 			dedup_ratio 3.11, 67.88; 
+ 			avg_chunk_size 5241.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 593085; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 238003; 
+ 			num_rollings 926838028; 
+ 			num_fingerprintings 956505; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 15404113 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90103530000
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/bbcSingleDir/ -H gear -JB -JC
+Info: tatal 8899 files in /home/xzjin/backupData/bbcSingleDir/, 8899 files to be tested
+max chunk id: 4665638912
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 1438189541; 
+ 			total_bytes 5013490415; 
+ 			unique_chunks 326502; 
+ 			total_chunks 1219552; 
+ 			dedup_ratio 3.49, 71.31; 
+ 			avg_chunk_size 4110.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 809750; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 260247; 
+ 			num_rollings 703540223; 
+ 			num_fingerprintings 1219552; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 12937030 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0x590103530000:97860885610496;
+ 			jc_jump_mask 0x590003530000:97856590643200;
+ 			jc_jump_len 2048 
+			break mask: d90103530000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/bbcSingleDir/ -H gear -JB
+Info: tatal 8899 files in /home/xzjin/backupData/bbcSingleDir/, 8899 files to be tested
+max chunk id: 4665638912
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 2563127524; 
+ 			total_bytes 5013705903; 
+ 			unique_chunks 121785; 
+ 			total_chunks 286151; 
+ 			dedup_ratio 1.96, 48.88; 
+ 			avg_chunk_size 17521.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 134461; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 110295; 
+ 			num_rollings 2004737713; 
+ 			num_fingerprintings 286151; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 14749510 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303531000
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/bbcSingleDir/ -H gear -JB -JC
+Info: tatal 8899 files in /home/xzjin/backupData/bbcSingleDir/, 8899 files to be tested
+max chunk id: 4665638912
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 2029891692; 
+ 			total_bytes 5013640594; 
+ 			unique_chunks 175318; 
+ 			total_chunks 509146; 
+ 			dedup_ratio 2.47, 59.51; 
+ 			avg_chunk_size 9847.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 274856; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 147654; 
+ 			num_rollings 1269824909; 
+ 			num_fingerprintings 509146; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 13687702 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303530000:238606963900416;
+ 			jc_jump_mask 0xd90103530000:238598373965824;
+ 			jc_jump_len 8192 
+			break mask: d90303531000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/bbcSingleDir/ -H gear -JB
+Info: tatal 8899 files in /home/xzjin/backupData/bbcSingleDir/, 8899 files to be tested
+max chunk id: 4665638912
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 3306737843; 
+ 			total_bytes 5013705903; 
+ 			unique_chunks 45349; 
+ 			total_chunks 88052; 
+ 			dedup_ratio 1.52, 34.05; 
+ 			avg_chunk_size 56940.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 34617; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 43476; 
+ 			num_rollings 3052823032; 
+ 			num_fingerprintings 88052; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 16435597 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303537000
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/bbcSingleDir/ -H gear -JB -JC
+Info: tatal 8899 files in /home/xzjin/backupData/bbcSingleDir/, 8899 files to be tested
+max chunk id: 4665638912
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 3071591724; 
+ 			total_bytes 5013691178; 
+ 			unique_chunks 58953; 
+ 			total_chunks 128687; 
+ 			dedup_ratio 1.63, 38.74; 
+ 			avg_chunk_size 38960.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 51748; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 54944; 
+ 			num_rollings 2180679193; 
+ 			num_fingerprintings 128687; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 14960842 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303533000:238606963912704;
+ 			jc_jump_mask 0xd90303531000:238606963904512;
+ 			jc_jump_len 32768 
+			break mask: d90303537000
++ set +o xtrace
+
+
+### gcc
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/gcc/ -H gear -JB
+Info: tatal 108 files in /home/xzjin/backupData/gcc/, 108 files to be tested
+max chunk id: 56623104
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 21343369498; 
+ 			total_bytes 44694302720; 
+ 			unique_chunks 3584457; 
+ 			total_chunks 8110546; 
+ 			dedup_ratio 2.09, 52.25; 
+ 			avg_chunk_size 5510.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 3863460; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 2948476; 
+ 			num_rollings 13157682273; 
+ 			num_fingerprintings 8110546; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 68428633 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90103530000
++ /home/xzjin/src/RapidCDC/cdc -c 4 -M 8 -d /home/xzjin/backupData/gcc/ -H gear -JB -JC
+Info: tatal 108 files in /home/xzjin/backupData/gcc/, 108 files to be tested
+max chunk id: 56623104
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 8192;
+ 			expect_avg_chunksize 4096;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 19940772331; 
+ 			total_bytes 44694302720; 
+ 			unique_chunks 4239531; 
+ 			total_chunks 10409036; 
+ 			dedup_ratio 2.24, 55.38; 
+ 			avg_chunk_size 4293.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 5321378; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 3450102; 
+ 			num_rollings 10171125533; 
+ 			num_fingerprintings 10409036; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 65557089 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0x590103530000:97860885610496;
+ 			jc_jump_mask 0x590003530000:97856590643200;
+ 			jc_jump_len 2048 
+			break mask: d90103530000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/gcc/ -H gear -JB
+Info: tatal 108 files in /home/xzjin/backupData/gcc/, 108 files to be tested
+max chunk id: 56623104
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 27945651223; 
+ 			total_bytes 44694302720; 
+ 			unique_chunks 1381793; 
+ 			total_chunks 2545312; 
+ 			dedup_ratio 1.60, 37.47; 
+ 			avg_chunk_size 17559.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 940430; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 1186677; 
+ 			num_rollings 22724509612; 
+ 			num_fingerprintings 2545312; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 79481570 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303531000
++ /home/xzjin/src/RapidCDC/cdc -c 16 -M 32 -d /home/xzjin/backupData/gcc/ -H gear -JB -JC
+Info: tatal 108 files in /home/xzjin/backupData/gcc/, 108 files to be tested
+max chunk id: 56623104
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 32768;
+ 			expect_avg_chunksize 16384;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 25707166846; 
+ 			total_bytes 44694302720; 
+ 			unique_chunks 1788096; 
+ 			total_chunks 3810620; 
+ 			dedup_ratio 1.74, 42.48; 
+ 			avg_chunk_size 11728.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 1670573; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 1488023; 
+ 			num_rollings 19004228344; 
+ 			num_fingerprintings 3810620; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 73757626 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303530000:238606963900416;
+ 			jc_jump_mask 0xd90103530000:238598373965824;
+ 			jc_jump_len 8192 
+			break mask: d90303531000
++ set +o xtrace
+
+
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/gcc/ -H gear -JB
+Info: tatal 108 files in /home/xzjin/backupData/gcc/, 108 files to be tested
+max chunk id: 56623104
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 34567869536; 
+ 			total_bytes 44694302720; 
+ 			unique_chunks 488718; 
+ 			total_chunks 712313; 
+ 			dedup_ratio 1.29, 22.66; 
+ 			avg_chunk_size 62745.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 158772; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 444764; 
+ 			num_rollings 30604577467; 
+ 			num_fingerprintings 712313; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 90179568 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 0;
+ 			jc_break_mask 0x0:0;
+ 			jc_jump_mask 0x0:0;
+ 			jc_jump_len 0 
+			break mask: d90303537000
++ /home/xzjin/src/RapidCDC/cdc -c 64 -M 128 -d /home/xzjin/backupData/gcc/ -H gear -JB -JC
+Info: tatal 108 files in /home/xzjin/backupData/gcc/, 108 files to be tested
+max chunk id: 56623104
+main Thread exit!
+Output: 
+ 			mini_chunksize 2048;
+ 			max_chunksize 131072;
+ 			expect_avg_chunksize 65536;
+ 			magic_number 0 hash gear;
+ 			bench default;
+ 			lru_enabled 0; 
+ 			list_length 1;
+			path_switch 0; 
+ 			mode_switch 0; 
+ 			unique_bytes 32266077949; 
+ 			total_bytes 44694302720; 
+ 			unique_chunks 668974; 
+ 			total_chunks 1118493; 
+ 			dedup_ratio 1.39, 27.81; 
+ 			avg_chunk_size 39959.00; 
+ 			run_mode 12; 
+ 			fast_hit_boundary 338008; 
+ 			fast_miss_chunks 0; 
+ 			fast_false_hit_chunks 0; 
+ 			unique_FP 589511; 
+ 			num_rollings 27005448236; 
+ 			num_fingerprintings 1118493; 
+ 			num_io 0; 
+ 			num_path_switch 0; 
+			regular_ctime 0 us; 
+ 			regular_dtime 0 us; 
+ 			fast_ctime 0 us; 
+ 			fast_time 85302404 us; 
+ 			iotime 0 us; 
+ 			num_threads 1 END
+			use jc 1;
+ 			jc_break_mask 0xd90303533000:238606963912704;
+ 			jc_jump_mask 0xd90303531000:238606963904512;
+ 			jc_jump_len 32768 
+			break mask: d90303537000
++ set +o xtrace
+
